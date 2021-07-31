@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+    </Filter>
+    <Filter Include="Frontend">
+      <UniqueIdentifier>{330c32e5-bc9c-442c-b116-eaf461f13bb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Frontend\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Frontend\Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Frontend\Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Frontend\Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="BL">
+      <UniqueIdentifier>{25aa51be-588a-47bd-ab5d-25332829d0f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BL\Header Files">
+      <UniqueIdentifier>{57648757-b840-40c1-8ed8-a253d9a78b6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BL\Source Files">
+      <UniqueIdentifier>{5b9f99dd-1228-437e-a06c-84cdc498e541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Backend">
+      <UniqueIdentifier>{34a0c7ae-fb40-41e0-8796-76bd13538315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Backend\Header Files">
+      <UniqueIdentifier>{eaee7014-d632-42d8-91df-df6ebba3737b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Backend\Source Files">
+      <UniqueIdentifier>{837e3e51-24c5-4605-a342-b1fc259e1ddf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="CdbDraft.qrc">
+      <Filter>Frontend\Resource Files</Filter>
+    </QtRcc>
+    <QtUic Include="CdbDraft.ui">
+      <Filter>Frontend\Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="CdbDraft.h">
+      <Filter>Frontend\Header Files</Filter>
+    </QtMoc>
+    <ClCompile Include="CdbDraft.cpp">
+      <Filter>Frontend\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Frontend\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientWidget.cpp">
+      <Filter>Frontend\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ValueClient.cpp">
+      <Filter>BL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CdbClient.cpp">
+      <Filter>Backend\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="ClientWidget.ui">
+      <Filter>Frontend\Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ClientWidget.h">
+      <Filter>Frontend\Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ValueClient.h">
+      <Filter>BL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CdbClient.h">
+      <Filter>Backend\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
