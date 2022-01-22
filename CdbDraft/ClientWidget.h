@@ -3,6 +3,7 @@
 #include "ui_ClientWidget.h"
 
 #include "ValueClient.h"
+#include "AttachmentClient.h"
 
 #include <Subscription.h>
 
@@ -22,9 +23,14 @@ private:
     std::unique_ptr<ValueClient> value_client_;
     tirx::Subscription value_subscription_;
 
+    std::unique_ptr<AttachmentClient> attachment_client_;
+    tirx::Subscription attachment_operation_subscription_;
+
     void openConnection();
     void updateControls();
     void getInitialValue();
     void updateCurValue(const std::string& value);
+
+    void uploadFile();
 };
 

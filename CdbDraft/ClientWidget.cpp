@@ -1,4 +1,5 @@
 #include "ClientWidget.h"
+#include "AttachmentClient.h"
 
 #include <QTimer>
 #include <QFontDatabase>
@@ -45,6 +46,7 @@ ClientWidget::ClientWidget(int idx, QWidget* parent)
         getInitialValue();
 
         // Subscribe on changes
+        
         value_subscription_ = value_client_->getObservable().subscribe([this](std::string value) {
             // "value" contains technical information, we just need new value
 
@@ -52,9 +54,20 @@ ClientWidget::ClientWidget(int idx, QWidget* parent)
             QTimer::singleShot(0, this, [this] {
                 const auto new_value = value_client_->getValue();
                 ui.monitor->insertPlainText(QString::fromStdString(log_string("<notification> " + new_value)));
+                //ui.monitor->ensureCursorVisible();
                 updateCurValue(new_value);
             });
         });
+        
+        attachment_operation_subscription_ =
+            attachment_client_->getObservable().subscribe([this](std::string value) {
+                // perform task in ui thread
+                QTimer::singleShot(0, this, [this, value] {
+                    ui.monitor->insertPlainText(
+                        QString::fromStdString(log_string("<attachment notification> " + value)));
+                    ui.monitor->ensureCursorVisible();
+                });
+            });
     });
 
     connect(ui.update_value_button, &QPushButton::clicked, this, [this]() {
@@ -62,6 +75,16 @@ ClientWidget::ClientWidget(int idx, QWidget* parent)
         ui.monitor->insertPlainText(QString::fromStdString(log_string("<set> " + value)));
         value_client_->setValue(value);
     });
+
+    connect(ui.upload, &QPushButton::clicked, this, &ClientWidget::uploadFile);
+
+    
+    
+}
+
+void ClientWidget::uploadFile() {
+    const auto file_name = ui.attachment_file_name->text().toStdString();
+    attachment_client_->uploadAttachment(file_name);
 }
 
 ClientWidget::~ClientWidget() {
@@ -85,6 +108,23 @@ void ClientWidget::openConnection() {
                                                       .with_document(doc_name)
                                                       .with_value_name(value_name)
                                                       .build());
+    {
+        const auto server = ui.server->text().toStdString();
+        const auto username = ui.username->text().toStdString();
+        const auto password = ui.password->text().toStdString();
+        const auto db_name = ui.db_name->text().toStdString();
+        const auto doc_name = ui.attachment_doc_name->text().toStdString();
+        const auto attachment_name = ui.attachment_name->text().toStdString();
+
+        attachment_client_ = std::make_unique<AttachmentClient>(AttachmentClient::AttachmentClientBuilder()
+                                                                    .with_server(server)
+                                                                    .with_username(username)
+                                                                    .with_password(password)
+                                                                    .with_database(db_name)
+                                                                    .with_document(doc_name)
+                                                                    .with_attachment_name(attachment_name)
+                                                                    .build());
+    }
 }
 
 void ClientWidget::updateControls() {

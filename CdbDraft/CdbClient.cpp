@@ -1,15 +1,20 @@
 #include "CdbClient.h"
 
+#include <filesystem>
+
+static constexpr time_t very_long_timeout = 99999;
+
 CdbClient::CdbClient(const std::string& server, const std::string& username, const std::string& password) {
     http_client_ = std::make_unique<httplib::Client>(server.c_str());
     http_client_->set_connection_timeout(3, 0);
     http_client_->set_basic_auth(username.c_str(), password.c_str());
-    
+    http_client_->set_read_timeout(very_long_timeout);
+    http_client_->set_write_timeout(very_long_timeout);
+
     // prepare feed client
     feed_client_ = std::make_unique<httplib::Client>(server.c_str());
     feed_client_->set_basic_auth(username.c_str(), password.c_str());
     feed_client_->set_connection_timeout(3, 0);
-    const time_t very_long_timeout = 99999;
     feed_client_->set_read_timeout(very_long_timeout);
     feed_thread_ = std::thread(&CdbClient::feedFunc, this);
 }
@@ -36,6 +41,30 @@ void CdbClient::writeDocument(const std::string& doc_name, const std::string& bo
     const auto res = http_client_->Put(path.c_str(), body, "application/json");
     //check res for write result if needed
 }
+
+std::string CdbClient::putDocument(const std::string& doc_name) {
+    const auto path = "/" + db_name_ + "/" + doc_name;
+    const auto res = http_client_->Put(path.c_str(), "{}", "application/json");
+    return res->body;
+}
+
+std::vector<char> CdbClient::getDocumentAttachment(const std::string& doc_name,
+                                                   const std::string& attachment_name) const {
+    const auto path = "/" + db_name_ + "/" + doc_name + "/" + attachment_name + "?conflicts=true";
+    const auto res = http_client_->Get(path.c_str());
+    // return res->body;
+    return {};
+}
+
+void CdbClient::putAttachment(const std::string& doc_name, const std::string& attachment_name,
+                              const std::vector<char>& data, const std::string& rev) {
+    const auto path = "/" + db_name_ + "/" + doc_name + "/" + attachment_name + "?conflicts=true";
+    httplib::Headers headers;
+    headers.emplace("If-Match", rev);
+    const auto res = http_client_->Put(path.c_str(), headers, data.data(), data.size(), "application/octet-stream");
+    return;
+}
+
 
 void CdbClient::feedFunc() {
     const auto path = "/" + db_name_ + "/_changes?feed=continuous&heartbeat=5&since=now";

@@ -24,6 +24,10 @@ public:
     void writeDocument(const std::string& doc_name, const std::string& body);
     void feedFunc();
 
+    std::vector<char> getDocumentAttachment(const std::string& doc_name, const std::string& attachment_name) const;
+    void putAttachment(const std::string& doc_name, const std::string& attachment_name, const std::vector<char>& data, const std::string& rev);
+    std::string putDocument(const std::string& doc_name);
+
     tirx::Observable<std::string>& getNewDataObservable();
 
 private:
