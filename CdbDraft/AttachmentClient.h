@@ -5,7 +5,7 @@
 class AttachmentClient {
  public:
     //std::vector<char> getAttachment() const;
-    void uploadAttachment(const std::string& file_name);
+    void uploadAttachment(const std::string& path);
     tirx::Observable<std::string>& getObservable();
 
  private:

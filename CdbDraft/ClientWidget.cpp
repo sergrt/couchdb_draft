@@ -83,8 +83,8 @@ ClientWidget::ClientWidget(int idx, QWidget* parent)
 }
 
 void ClientWidget::uploadFile() {
-    const auto file_name = ui.attachment_file_name->text().toStdString();
-    attachment_client_->uploadAttachment(file_name);
+    const auto path = ui.attachment_path->text().toStdString();
+    attachment_client_->uploadAttachment(path);
 }
 
 ClientWidget::~ClientWidget() {
