@@ -70,6 +70,9 @@
     <ClCompile Include="CdbClient.cpp">
       <Filter>Backend\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AttachmentClient.cpp">
+      <Filter>BL\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ClientWidget.ui">
@@ -87,6 +90,9 @@
     </ClInclude>
     <ClInclude Include="CdbClient.h">
       <Filter>Backend\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AttachmentClient.h">
+      <Filter>BL\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
